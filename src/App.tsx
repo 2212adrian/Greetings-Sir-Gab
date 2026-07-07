@@ -354,7 +354,7 @@ function Game2Memory({ onSolve }: { onSolve: () => void }) {
         {solved && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="text-center">
             <div className="premium-glass px-6 py-3 rounded text-zinc-200 text-lg flex items-center gap-2">
-              🧠 Memory Expert unlocked: <span className="text-red-500 font-black text-2xl ml-2">I</span>
+              🧠 Memory Expert unlocked: <span className="text-red-500 font-black text-2xl ml-2">E</span>
             </div>
           </motion.div>
         )}
