@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+body {
+  @apply bg-zinc-950 text-gray-200 overflow-hidden select-none font-mono;
+}
+
+/* Custom Premium Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { @apply bg-zinc-950; }
+::-webkit-scrollbar-thumb { @apply bg-red-600 rounded-full shadow-[0_0_10px_rgba(220,38,38,0.5)]; }
+
+/* High-End Glassmorphic UI */
+.premium-glass {
+  background: rgba(12, 12, 16, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(220, 38, 38, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8), 
+              inset 0 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+.premium-glow-red {
+  box-shadow: 0 0 20px rgba(220, 38, 38, 0.25), 
+              inset 0 0 10px rgba(220, 38, 38, 0.1);
+}
+
+/* CRT Screen Scanline/Glare Overlay */
+.crt-overlay {
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
+  background-size: 100% 3px;
+}
+
+/* 3D Transform Utilities */
+.perspective-1000 { perspective: 1000px; }
+.preserve-3d { transform-style: preserve-3d; }
+.backface-hidden { backface-visibility: hidden; }
+.rotate-y-180 { transform: rotateY(180deg); }
+
+/* Custom Cursor Glow */
+.custom-cursor {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #ef4444;
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9999;
+  transition: width 0.2s, height 0.2s, background-color 0.2s;
+}
+
+.custom-cursor-dot {
+  width: 6px;
+  height: 6px;
+  background-color: #ef4444;
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* --- PREMIUM HEXAGON PICTURE RECONSTRUCTION GRID --- */
+.hex-clip {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  background-size: 300px 300px;
+  transform-origin: center center;
+  animation: rebuildHex 7s infinite cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+@keyframes rebuildHex {
+  0% {
+    opacity: 0;
+    transform: scale(0.2) rotate(-45deg);
+    filter: brightness(0) hue-rotate(90deg);
+  }
+  15%, 75% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    filter: brightness(1) hue-rotate(0deg);
+  }
+  90%, 100% {
+    opacity: 0;
+    transform: scale(0.2) rotate(45deg);
+    filter: brightness(0) hue-rotate(-90deg);
+  }
+}
+
+/* Precise Staggered Delays for Piece-by-Piece Assembly */
+.h-center { animation-delay: 0s; }
+.h-top { animation-delay: 0.3s; }
+.h-bottom { animation-delay: 0.6s; }
+.h-top-left { animation-delay: 0.9s; }
+.h-top-right { animation-delay: 1.2s; }
+.h-bottom-left { animation-delay: 1.5s; }
+.h-bottom-right { animation-delay: 1.8s; }
+
+/* Custom Biometric Logo Floating Motion */
+@keyframes logoFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.animate-logo-float {
+  animation: logoFloat 4.5s ease-in-out infinite;
+}
