@@ -88,7 +88,6 @@ import 'yet-another-react-lightbox/styles.css';
 
 // Pre-defined mockup memory gallery images for the Swiper showcase
 const GALLERY_PHOTOS = [
-  nekoskiImg,
   game1Img,
   game2Img,
   game3Img,
@@ -244,7 +243,7 @@ function Game1Jigsaw({ onSolve }: { onSolve: () => void }) {
         {solved && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="text-center">
             <div className="premium-glass px-6 py-3 rounded text-zinc-200 text-lg flex items-center gap-2">
-              🏆 First Seal Broken: <span className="text-red-500 font-black text-2xl ml-2">B</span>
+              🏆 First Seal Broken: <span className="text-red-500 font-black text-2xl ml-2">N</span>
             </div>
           </motion.div>
         )}
@@ -465,7 +464,7 @@ function Game3Riddles({ onSolve }: { onSolve: () => void }) {
         {solved && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="text-center w-full">
             <div className="premium-glass px-8 py-4 rounded-xl text-zinc-200 text-lg flex items-center justify-center gap-3">
-              🔍 Riddle Master unlocked: <span className="text-red-500 font-black text-2xl ml-2">R</span>
+              🔍 Riddle Master unlocked: <span className="text-red-500 font-black text-2xl ml-2">K</span>
             </div>
           </motion.div>
         )}
@@ -882,7 +881,7 @@ function Game4HiddenObject({ onSolve }: { onSolve: () => void }) {
             className="text-center w-full lg:absolute lg:bottom-12 lg:left-1/2 lg:-translate-x-1/2 lg:z-50"
           >
             <div className="premium-glass px-8 py-4 rounded text-zinc-200 text-lg flex items-center justify-center gap-3">
-              🛡️ Spectral Locator loaded: <span className="text-red-500 font-black text-2xl ml-2">T</span>
+              🛡️ Spectral Locator loaded: <span className="text-red-500 font-black text-2xl ml-2">O</span>
             </div>
           </motion.div>
         )}
@@ -906,7 +905,7 @@ function Game5CodeLock({ onSolve }: { onSolve: () => void }) {
     SoundManager.play('click');
     const clean = code.trim().toUpperCase();
 
-    if (clean === "BIRTHDAY" || clean === "BIRTH") {
+    if (clean === "NEKOSKI" || clean === "NEKO") {
       setSolved(true);
       setGearsRotating(true);
       SoundManager.play('vault');
@@ -939,7 +938,6 @@ function Game5CodeLock({ onSolve }: { onSolve: () => void }) {
     <div className="flex flex-col items-center gap-6 w-full max-w-md px-4">
       <div className="text-center">
         <h2 className="text-2xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-red-500 to-zinc-400">TRIAL V: CORE COMPILATION</h2>
-        <p className="text-sm text-zinc-400 mt-2">Synthesize sequence: <span className="text-red-500 font-bold tracking-widest ml-1">B I R T</span></p>
       </div>
 
       <div className="relative w-full flex justify-between px-6 mb-2 items-center">
@@ -962,7 +960,7 @@ function Game5CodeLock({ onSolve }: { onSolve: () => void }) {
       </div>
 
       <form onSubmit={handleSubmit} className="w-full bg-zinc-900 border border-zinc-800 p-6 rounded-lg relative">
-        <p className="text-center text-xs text-zinc-500 uppercase tracking-widest mb-4">Today is a wondrous day! And Today is your...</p>
+        <p className="text-center text-xs text-zinc-500 uppercase tracking-widest mb-4">Something is wrong, is not letting us in. Do you know the code?</p>
         
         <input 
           type="text" 
@@ -1488,38 +1486,79 @@ An exclusive journey awaits you. Hidden behind each trial is a piece of somethin
             All protocols are fully resolved. You have unlocked access to your secure cards.
           </p>
 
-          {/* Premium Swiper Memory Slideshow Component (Locked to aspect-square) */}
-<div className="w-full max-w-sm aspect-square mb-12 relative mx-auto">
-  <div className="absolute -inset-2 bg-red-600/10 rounded-xl blur-lg pointer-events-none" />
+          {/* Premium Swiper Memory Slideshow Component (Wider container, fanned-out layout) */}
+<div className="w-full max-w-4xl mb-12 relative mx-auto px-4 select-none swiper-3d-gallery">
+  
+  {/* Scoped CSS Stacking Context Fix to ensure Center is ALWAYS on top of Left/Right */}
+  <style dangerouslySetInnerHTML={{__html: `
+    .swiper-3d-gallery .swiper-slide {
+      z-index: 1 !important;
+    }
+    .swiper-3d-gallery .swiper-slide-active {
+      z-index: 30 !important;
+    }
+    .swiper-3d-gallery .swiper-slide-prev,
+    .swiper-3d-gallery .swiper-slide-next {
+      z-index: 10 !important;
+    }
+  `}} />
+
+  <div className="absolute -inset-4 bg-red-600/5 rounded-xl blur-xl pointer-events-none" />
+  
   <Swiper
-    spaceBetween={20}
-    slidesPerView={1}
+    slidesPerView={3}            // Divides Swiper into exactly 3 column blocks
+    centeredSlides={true}
     loop={true}
+    spaceBetween={0}
     onTap={(swiper) => {
       SoundManager.play('click');
       
-      // 1. Check if Swiper captured the exact slide that was clicked
       if (swiper.clickedSlide) {
         const slideIndexAttr = swiper.clickedSlide.getAttribute('data-swiper-slide-index');
         if (slideIndexAttr !== null) {
           const realClickedIndex = parseInt(slideIndexAttr, 10);
-          setLightboxIndex(realClickedIndex); // Opens the exact tapped slide
+          setLightboxIndex(realClickedIndex);
           return;
         }
       }
-      
-      // 2. Fallback to active index if target element is not resolved
       setLightboxIndex(swiper.realIndex);
     }}
-    className="rounded-xl overflow-hidden border border-zinc-800 w-full h-full aspect-square"
+    className="w-full h-64 sm:h-80 md:h-96 !overflow-visible"
   >
     {GALLERY_PHOTOS.map((src, idx) => (
-      <SwiperSlide key={idx} className="cursor-pointer">
-        <img 
-          src={src} 
-          alt="Nekoski Memory Grid" 
-          className="w-full h-full object-cover aspect-square hover:scale-105 transition-transform duration-500" 
-        />
+      <SwiperSlide key={idx} className="cursor-pointer !overflow-visible">
+        {({ isActive, isPrev, isNext }) => {
+          // Hide any duplicate slides far off-screen to keep the gallery presentation clean
+          if (!isActive && !isPrev && !isNext) {
+            return (
+              <div className="opacity-0 pointer-events-none w-full h-full transition-all duration-500" />
+            );
+          }
+
+          let transformClass = "";
+
+          if (isActive) {
+            // Middle Slide: Elevated slightly larger, stands straight, sits strictly on top
+            transformClass = "scale-105 rotate-0 translate-x-0 opacity-100 shadow-[0_25px_60px_rgba(0,0,0,0.95)] border-red-500/80";
+          } else if (isPrev) {
+            // Left Slide: Crisp, fanned slightly left, rotated, and stacked underneath
+            transformClass = "scale-90 -rotate-6 -translate-x-[-36%] translate-y-[-8%] opacity-80 origin-bottom-right shadow-[0_10px_25px_rgba(0,0,0,0.6)] border-zinc-800/80";
+          } else if (isNext) {
+            // Right Slide: Crisp, fanned slightly right, rotated, and stacked underneath
+            transformClass = "scale-90 rotate-6 translate-x-[-36%] translate-y-[-8%] opacity-80 origin-bottom-left shadow-[0_10px_25px_rgba(0,0,0,0.6)] border-zinc-800/80";
+          }
+
+          return (
+            /* Forces cards to remain perfect squares centered inside their Swiper columns */
+            <div className={`h-full aspect-square mx-auto transition-all duration-500 ease-out transform border bg-zinc-950 rounded-2xl overflow-hidden ${transformClass}`}>
+              <img 
+                src={src} 
+                alt="Nekoski Memory Grid" 
+                className="w-full h-full object-cover" 
+              />
+            </div>
+          );
+        }}
       </SwiperSlide>
     ))}
   </Swiper>
